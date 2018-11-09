@@ -1,0 +1,17 @@
+#PBS -N pppm
+#PBS -q route
+#PBS -l nodes=16:ppn=8
+#PBS -l walltime=100:00:00        
+#PBS -m bea
+#PBS -M djoiner@kean.edu
+PROGRAM='./galaxsee netcdf.gal > netcdf.out'
+cd $PBS_O_WORKDIR
+# run the program
+NNODES=`cat $PBS_NODEFILE | wc -l`
+source /share/apps/modules/Modules/3.2.8/init/bash
+module purge
+module avail
+module load use.own
+module load local
+time /opt/mpich/intel/bin/mpirun -np $NNODES -machinefile $PBS_NODEFILE $PROGRAM
+exit 0

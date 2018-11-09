@@ -1,0 +1,70 @@
+GADGET2_PREFIX in      
+GADGET2_PATH Gadget2/      
+GADGET2_LENGTH 3.0856e18    #parsec in cm
+GADGET2_MASS 1.989e33       # solar mass in g
+GADGET2_VELOCITY 9.77814e10 #parsecs per megayear
+## GALAXSEE sample input file
+N 500                          # number of masses
+TFINAL 1000.0                   # final time in time units
+TIMESTEP 1.0                    # timestep
+INITIAL_V 0.0                   # initial random velocity in velocity units
+ROTATION_FACTOR 0.8             # unitless rotation factor (equilibrium at 1.0)
+SCALE  500.0                    # 1/2 the "box" side length
+MASS 200000.0                   # total system mass
+G 0.00449                       # Gravitational Constant
+## Comments regarding units
+#  Time, Mass, and Distance variables are given in units of the
+#     users choice. Velocity values should be consistent with these choices,
+#     as should G and the expansion constant.
+#
+#  A typical choice for a cluster of stars might be
+#  TFINAL = 1000.0          # MegaYears
+#  TIME_STEP = 1.0          # MegaYears
+#  SCALE = 500.0            # Parsecs
+#  MASS = 200000.0          # Solar Masses
+#  INITIAL_V 0.0            # Parsecs per MegaYear
+#  G = 0.00449              # parsecs cubed per megayear squared per solar mass
+##
+
+## UPDATE_METHOD is a bitmask allowing you to layer different display options
+#  UPDATEMETHOD_HASH_TEXT 1                  # display a hash mark every update
+#  UPDATEMETHOD_BRIEF_TEXT 2                 # display model time
+#  UPDATEMETHOD_VERBOSE_POSITIONS 4          # display all positions at update
+#  UPDATEMETHOD_GD_IMAGE 8                   # create image files using GD
+#  UPDATEMETHOD_TEXT11 16                    # display ascii art animation
+#  UPDATEMETHOD_X11 32                       # display X11 image
+#  UPDATEMETHOD_VERBOSE_STATISTICS 64        # display energy statistics
+#  UPDATEMETHOD_SDL 128                      # display SDL/OpenGL image
+#  UPDATEMETHOD_DUMP 256                     # write raw data to file at update
+#
+#  If you wanted to include both an X11 display and brief text to the terminal
+#  for example, you would use 32 + 2 = 34
+#  UPDATE_METHOD 34
+#
+#  *NOTE   Some update options require compilation against other system
+#          libraries, and you may not be able to use all visualization options
+#          if they were not included in the Makefile and present on the
+#          system at compilation.
+##
+UPDATE_METHOD 1
+
+## SHOW_DISPLAY is either zero or positive to allow a display to be shown
+SHOW_DISPLAY 1
+
+## SKIP_UPDATES allows the user to skip the number of timesteps between
+#  refreshed information about the model
+##
+SKIP_UPDATES 1
+
+## not simple
+FORCE_METHOD 3
+
+NGRID 32
+
+KSIGMA 2.0
+
+KNEAR 1.0
+
+DISTRIBUTION 2
+
+SRAD_FACTOR 5.0

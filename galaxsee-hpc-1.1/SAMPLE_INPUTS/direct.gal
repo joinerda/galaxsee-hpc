@@ -1,0 +1,170 @@
+## GALAXSEE sample input file
+N 5000                           # number of masses
+TFINAL 1.0                   # final time in time units
+TIMESTEP 0.5                    # timestep
+INITIAL_V 0.0                   # initial random velocity in velocity units
+ROTATION_FACTOR 0.0             # unitless rotation factor (equilibrium ~ 1.0)
+DRAG_COEFFICIENT 0.0            # coefficient of dynamical friction
+SCALE  13.0                     # 1/2 the "box" side length
+MASS 800.0  a                   # total system mass
+G 0.00449                       # Gravitational Constant
+EXPANSION 0.0                   # expansion constant in velocity/distance units
+## Comments regarding units
+#  Time, Mass, and Distance variables are given in units of the
+#     users choice. Velocity values should be consistent with these choices,
+#     as should G and the expansion constant.
+#
+#  A typical choice for a cluster of stars might be
+#  TFINAL = 1000.0          # MegaYears
+#  TIME_STEP = 1.0          # MegaYears
+#  SCALE = 500.0            # Parsecs
+#  MASS = 200000.0          # Solar Masses
+#  INITIAL_V 0.0            # Parsecs per MegaYear
+#  G = 0.00449              # parsecs cubed per megayear squared per solar mass
+##
+
+## INT_METHOD is the integration method
+#  INT_METHOD_RK4          1
+#  INT_METHOD_LEAPFROG     2
+#  INT_METHOD_MPEULER      3
+#  INT_METHOD_IEULER       4
+#  INT_METHOD_EULER        5
+#  INT_METHOD_ABM          6
+##
+INT_METHOD 1
+
+## FORCE METHOD determines how forces are calculated based on position
+#  FORCE_METHOD_DIRECT  1
+#  FORCE_METHOD_TREE    2
+#  FORCE_METHOD_PPPM    3
+#
+#   *NOTE   Some force calculation methods require compilation
+#           against external numerical libraries, and you may
+#           not be able to use all force methods if those libraries
+#           are not present and included in the Makefile at compilation
+##
+FORCE_METHOD 1
+
+## FORCE_METHOD_TREE options
+# TREE_RANGE COEFFICIENT is a scale factor determining how far apart
+#   two branches of the octtree must be at a given stage in order
+#   to allow an approximation to be made. This distance is taken as
+#   a constant multiple of the octtree node size at any given stage.
+##
+TREE_RANGE_COEFFICIENT 2.0
+
+## NGRID
+#  The resolution of the grid used in PPPM force calculation methods
+##
+NGRID 32
+
+## KSIGMA and KNEAR
+#  coefficients controlling a PPPM solution, they control the
+#  smoothing of point masses into a density distribution and the
+#  cutoffs for the Particle-Particle calculation for near neighbors
+#  For the purposes of mapping point particles to a density distribution
+#  on a grid the density function per point mass is assumed to be
+#  normal with a standard deviation given by
+#     KSIGMA * (2 * SCALE) / NGRID
+#  and nearest neighbors are any objects within
+#     KNEAR * (2 * SCALE) / NGRID
+#  To use a PM solution instead of a PPPM solution set KNEAR to zero.
+##
+KSIGMA 2.0
+KNEAR 1.0
+
+## DISTRIBUTION controls the initial distribution of masses
+#  DISTRIBUTION_SPHERICAL_RANDOM 1
+#  DISTRIBUTION_RECTANGULAR_RANDOM 2
+#  DISTRIBUTION_RECTANGULAR_UNIFORM 3
+##
+DISTRIBUTION 1
+
+## ANISOTROPY is in distanced units, and is a random shift given
+#  to particle positions in distributions that are initially uniform
+ANISOTROPY 0.01
+
+## Softened potentials
+#    two softening options are given, srad factor is a unitless coefficient
+#     for which a "shield radius" is calculated for each point mass M
+#     so that close encounters within that shield radius are neglected
+#     SRAD = SRAD_FACTOR * (G * M * TIMESTEP^2 )^(1/3)
+#    the other option is an additive term in the denominator of force
+#     calculation terms so that instead of a force of G M1 M2 / r^2
+#     one uses F = G M1 M2 / (r + SOFT_FACTOR)^2
+##
+SRAD_FACTOR 5.0
+SOFT_FACTOR 0.0
+
+## UPDATE_METHOD is a bitmask allowing you to layer different display options
+#  UPDATEMETHOD_HASH_TEXT 1                  # display a hash mark every update
+#  UPDATEMETHOD_BRIEF_TEXT 2                 # display model time
+#  UPDATEMETHOD_VERBOSE_POSITIONS 4          # display all positions at update
+#  UPDATEMETHOD_GD_IMAGE 8                   # create image files using GD
+#  UPDATEMETHOD_TEXT11 16                    # display ascii art animation
+#  UPDATEMETHOD_X11 32                       # display X11 image
+#  UPDATEMETHOD_VERBOSE_STATISTICS 64        # display energy statistics
+#  UPDATEMETHOD_SDL 128                      # display SDL/OpenGL image
+#  UPDATEMETHOD_DUMP 256                     # write raw data to file at update
+#
+#  If you wanted to include both an X11 display and brief text to the terminal
+#  for example, you would use 32 + 2 = 34
+#  UPDATE_METHOD 34
+#
+#  *NOTE   Some update options require compilation against other system
+#          libraries, and you may not be able to use all visualization options
+#          if they were not included in the Makefile and present on the
+#          system at compilation.
+##
+UPDATE_METHOD 33
+
+## SHOW_DISPLAY is either zero or positive to allow a display to be shown
+SHOW_DISPLAY 1
+
+## SKIP_UPDATES allows the user to skip the number of timesteps between
+#  refreshed information about the model
+##
+SKIP_UPDATES 1
+
+## FILE_PREFIX is a string denoting the prefix of all output files
+#  produced by the code
+##
+FILE_PREFIX out
+
+## SEED
+# if left out, model will be seeded based on system time
+##
+#SEED 0
+
+## COORDS
+# The initial distribution of positions, velocities, masses, and display
+#   colors can be
+#   overriden using the COORDS command. Objects in the arrays
+#   nbody.x, .y, .z, .vx, .vy, .vz, .mass, and .color will be replaced
+#   starting from the first.
+#
+#   *NOTE, the mass distribution by default will split the mass entered
+#     using the MASS command up evenly over N objects. If you plan to
+#     override any of these using the COORD command, you should adjust
+#     your MASS accordingly. For example, if you want to have 99
+#     objects with a mass of 10 solar masses each and 1 object with a
+#     mass of 10000 solar masses, you would use
+#   N 100
+#   MASS 1000    #(100 objects with a mass of 10, 1 of which will be replaced)
+#   COORDS 0.0 0.0 0.0 0.0 0.0 0.0 10000.0 0
+##
+#COORDS 1.0 0.0 0.0 0.0 0.0 0.0 10.0 0
+
+## POINTSIZE
+#     overrides default point size, currently set to 1/50th of the value
+#      of SCALE, should be expressed as a fraction of SCALE
+##
+POINTSIZE 0.02
+
+## DELAY
+# DELAY adds an additional delay in microseconds per step in order
+#    to slow fast simulations down for animation
+##
+#DELAY 0
+
+PRINT_STATISTICS 0

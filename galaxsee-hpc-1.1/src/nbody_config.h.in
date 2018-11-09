@@ -1,0 +1,2 @@
+#define galaxseehpc_VERSION_MAJOR "@galaxseehpc_VERSION_MAJOR@"
+#define galaxseehpc_VERSION_MINOR "@galaxseehpc_VERSION_MINOR@"
